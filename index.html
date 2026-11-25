@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Korus Finance</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#0b6e6e">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<style>
+:root{--bg:#eef1f4;--c:#fff;--ink:#162029;--mut:#5f6f7c;--p:#0b6e6e;--pt:#fff;--neg:#c2411f;--pos:#23784a;--b:#d9e0e6;color-scheme:light}
+:root[data-t=dark]{--bg:#0e151b;--c:#16212a;--ink:#e6edf2;--mut:#8ea0ae;--p:#3fc1c0;--pt:#062a2a;--neg:#f0805f;--pos:#5cc88b;--b:#25333e;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom));font-variant-numeric:tabular-nums}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 16px 8px;display:flex;align-items:center;gap:10px}
+h1{font:800 24px/1 system-ui,sans-serif;letter-spacing:-.03em;margin:0;flex:1}
+h3{font-size:15px;margin:22px 16px 8px}
+.mn{display:flex;align-items:center;background:var(--c);border-radius:99px;border:1px solid var(--b)}
+.mn b{min-width:74px;text-align:center;font-weight:600}
+.mn button{width:34px;height:34px;font-size:20px}
+.ch{display:flex;gap:6px;padding:0 16px 8px;overflow-x:auto}
+.ch button{padding:7px 14px;border-radius:99px;border:1px solid var(--b);background:var(--c);white-space:nowrap}
+.ch .on{background:var(--p);color:var(--pt);border-color:var(--p);font-weight:600}
+.sm{display:flex;justify-content:space-between;margin:4px 16px 10px;color:var(--mut)}.sm b{color:var(--ink);font-size:17px}
+.cd{display:flex;align-items:center;gap:12px;margin:0 16px 8px;padding:12px 14px;background:var(--c);border:1px solid var(--b);border-radius:12px}
+.cd.dn{opacity:.55}.cd.dn .bd b{text-decoration:line-through}
+.bd{flex:1;min-width:0}.bd b{display:block;overflow:hidden;text-overflow:ellipsis}
+.bd small{display:flex;flex-wrap:wrap;gap:2px 10px;color:var(--mut);font-size:12.5px}
+.vl{font-weight:700;white-space:nowrap}.ng{color:var(--neg)}.ps{color:var(--pos)}
+.ck{width:26px;height:26px;border-radius:8px;border:2px solid var(--p);color:var(--p);font-weight:800;flex:none}
+.em{text-align:center;color:var(--mut);margin:40px 16px}
+.fab{position:fixed;right:18px;bottom:calc(86px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:18px;background:var(--p);color:var(--pt);font-size:30px;box-shadow:0 4px 14px #0004;z-index:6}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:7;display:flex;background:var(--c);border-top:1px solid var(--b);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--mut);padding:4px 0}
+nav i{font-style:normal;font-size:20px;line-height:1}nav .on{color:var(--p);font-weight:700}
+.kg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px}
+.kp{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:12px 14px}
+.kp small{color:var(--mut);display:block}.kp b{font-size:20px;letter-spacing:-.02em}
+.kp:last-child{grid-column:1/3;background:var(--p);border-color:var(--p)}.kp:last-child small,.kp:last-child b{color:var(--pt)}.kp:last-child b{font-size:30px}
+.chart{width:calc(100% - 32px);margin:0 16px;background:var(--c);border:1px solid var(--b);border-radius:12px}
+.chart polyline{fill:none;stroke:var(--p);stroke-width:2.2}.chart circle{fill:var(--p)}.chart .cur{r:5;fill:var(--neg)}
+.chart text{font-size:9px;fill:var(--mut);text-anchor:middle}.chart .z{stroke:var(--mut);stroke-dasharray:3;stroke-width:.6}
+.tw{overflow-x:auto;margin:0 16px}table{border-collapse:collapse;width:100%;font-size:13px;background:var(--c);border-radius:12px}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--b);white-space:nowrap}th:first-child,td:first-child{text-align:left}th{color:var(--mut);font-weight:500}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:0 16px 12px}
+.cg small{text-align:center;color:var(--mut)}.cg button{aspect-ratio:1;background:var(--c);border:1px solid var(--b);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.cg .on{outline:2px solid var(--p)}.cg i{display:flex;gap:2px}.cg em{width:6px;height:6px;border-radius:9px;background:var(--mut)}.cg em.pos{background:var(--pos)}.cg em.neg{background:var(--neg)}
+.md{position:fixed;inset:0;background:#0007;z-index:20;display:flex;align-items:flex-end}
+.sh{background:var(--c);width:100%;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.sh h2{margin:0 0 12px;font-size:19px}label{display:block;margin-bottom:10px;color:var(--mut);font-size:13px}
+label input{display:block;width:100%;margin-top:4px;padding:11px 12px;border-radius:10px;border:1px solid var(--b);background:var(--bg);font-size:16px}
+.bt{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.bt>*{flex:1;padding:12px;border-radius:12px;border:1px solid var(--b);text-align:center;min-width:110px}
+.pr{background:var(--p);color:var(--pt);border-color:var(--p)!important;font-weight:700}.dg{color:var(--neg)}
+.gate{max-width:340px;margin:22vh auto;padding:0 20px;text-align:center}.gate h1{margin-bottom:16px}
+.th{font-size:18px;width:36px;height:36px;border-radius:99px;border:1px solid var(--b);background:var(--c)}.hero{margin:0 16px 14px}.hero b{display:block;font-size:30px;letter-spacing:-.03em}.hero small{color:var(--mut)}
+.cap{margin:0 16px 14px;background:#000;border-radius:16px;overflow:hidden}.cap img{display:block;width:100%;max-height:240px;object-fit:contain}
+.tt{position:fixed;top:calc(10px + env(safe-area-inset-top));left:12px;right:12px;z-index:30;background:var(--p);color:var(--pt);padding:12px 14px;border-radius:12px;font-weight:600;box-shadow:0 4px 14px #0004}
+:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+</style><script>try{document.documentElement.dataset.t=localStorage.kft||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script></head><body><div id="app"></div>
+<script>
+const CODE='';/* Código de acesso do cliente. Deixe vazio para app sem bloqueio. */
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
+R=v=>(+v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),fd=d=>d?d.split('-').reverse().join('/'):'',
+pad=n=>String(n).padStart(2,'0'),T=new Date(),TD=T.getFullYear()+'-'+pad(T.getMonth()+1)+'-'+pad(T.getDate()),
+MN=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let D={};try{D=JSON.parse(localStorage.kf||'{}')}catch(e){}
+const save=()=>{try{localStorage.kf=JSON.stringify(D)}catch(e){}};
+let V={k:'resumo',ym:TD.slice(0,7),day:''};
+const INST=['Inter','Nubank','Itaú','Bradesco','Caixa','Sicoob','Santander','C6 Bank','PicPay','Banco do Brasil','BTG Pactual','Outros'],
+CAT=['Alimentação','Transporte','Moradia','Lazer','Saúde','Educação','Investimento','Assinaturas','Serviços / Taxas','Doações','Compras','Outros'],
+PAG=['Cartão de crédito','Cartão de débito','Pix','Transferência','Boleto','Dinheiro','Vale'],
+PR=r=>{const i=['Alta','Média','Baixa'].indexOf(r.Prioridade);return i<0?9:i};
+const S={
+entradas:{t:'Entradas',f:[['Origem','text'],['Data','date'],['Categoria','sel',['PJ','CLT','CDB','Depósito','Fundos + ações','Criptomoedas','Outros']],['Subcategoria','sel',['Salário','Bônus','Dividendos','Juros','Aluguel','Venda de ativos','Valorização','Presente/Prêmio']],['Valor líquido','money'],['Instituição','sel',INST],['Entrada fixa','sel',['Não','Todo mês']],['Repetir até','date']],d:'Data',v:'Valor líquido',s:1,rp:'Entrada fixa'},
+gastos:{t:'Gastos do mês',c:'Gastos',f:[['Descrição','text'],['Data','date'],['Categoria','sel',CAT],['Valor','money'],['Financeira','sel',INST],['Destinatário','text'],['Forma de pagamento','sel',PAG]],d:'Data',v:'Valor',s:-1},
+fixas:{t:'Dívidas fixas',c:'Fixas',f:[['Descrição','text'],['Vencimento','date'],['Repetir','sel',['Todo mês','Não repetir']],['Repetir até','date'],['Categoria','sel',CAT],['Valor','money'],['Financeira','sel',INST],['Destinatário','text'],['Forma de pagamento','sel',PAG]],d:'Vencimento',v:'Valor',s:-1,rp:'Repetir',pg:1},
+parc:{t:'Parcelamentos',c:'Parcelas',f:[['Compra','text'],['Tipo','sel',['Cartão','Boleto']],['Cartão / Banco','sel',INST],['Destinatário','text'],['Valor total','money'],['Nº de parcelas','num'],['1ª parcela','date'],['Valor da parcela','money']],d:'1ª parcela',v:'Valor da parcela',s:-1,par:1,pg:1,
+ ex:r=>(md(r['1ª parcela'],V.ym)+1)+'/'+(r['Nº de parcelas']||0)+' parcelas',
+ post:r=>{const n=+r['Nº de parcelas']||0;if(!+r['Valor da parcela']&&n)r['Valor da parcela']=+(r['Valor total']/n).toFixed(2)}},
+repor:{t:'A repor',f:[['Descrição','text'],['Data','date'],['Categoria','sel',CAT],['Valor','money'],['Método de pagamento','sel',PAG],['Repor em','text']],d:'Data',v:'Valor',s:0},
+invest:{t:'Investimentos',c:'Invest.',f:[['Origem','text'],['Data','date'],['Categoria','sel',['CDB','Depósito','Fundos + ações','Criptomoedas','Tesouro','Previdência','Outros']],['Subcategoria','sel',['Aporte','Dividendos','Juros','Valorização','Venda de ativos','Outros']],['Instituição','sel',INST],['Valor fixo','money'],['Valor extra','money']],d:'Data',v:'Valor fixo',v2:'Valor extra',s:0},
+patr:{t:'Patrimônio',f:[['Conta','sel',[]],['Mês','month'],['Valor','money']],d:'Mês',v:'Valor',s:1},
+metas:{t:'Metas',f:[['Meta','text'],['Grupo','sel',['Pessoal','Cursos','Negócios']],['Prioridade','sel',['Alta','Média','Baixa']],['Responsável','text'],['Prazo','date'],['Status','sel',['A fazer','Concluída']],['Observações','text']],all:1,chk:['Status','Concluída','A fazer'],srt:(a,b)=>(a.Status=='Concluída')-(b.Status=='Concluída')||PR(a)-PR(b)},
+plano:{t:'Plano financeiro',c:'Plano',f:[['Descrição','text'],['Tipo','sel',['A receber','A pagar']],['Valor','money'],['Previsão','date'],['Status','sel',['Em aberto','Concluído']],['Observações','text']],all:1,v:'Valor',nt:1,chk:['Status','Concluído','Em aberto'],cls:r=>r.Tipo=='A receber'?'ps':'ng',srt:(a,b)=>(a.Status=='Concluído')-(b.Status=='Concluído')||String(a.Previsão||'9').localeCompare(b.Previsão||'9')},
+cal:{t:'Calendário financeiro',c:'Calendário',f:[['Nome','text'],['Data','date'],['Horário','time'],['Lembrete','sel',['Não','Sim']],['Tipo','sel',['Receita','Despesa','Transferência','Investimento']],['Categoria','sel',CAT],['Valor','money'],['Recorrente','sel',['Não','Sim']],['Observações','text']],d:'Data',v:'Valor',nt:1,rec:1,ex:r=>r.Lembrete=='Sim'?'🔔':'',srt:(a,b)=>((a.Data||'')+(a['Horário']||'')).localeCompare((b.Data||'')+(b['Horário']||'')),cls:r=>r.Tipo=='Receita'?'ps':r.Tipo=='Despesa'?'ng':''}};
+const G={resumo:['resumo'],entradas:['entradas'],saidas:['gastos','fixas','parc','repor'],invest:['invest'],mais:['patr','metas','plano','cal','bkp']},
+NAV=[['resumo','Resumo','◧'],['entradas','Entradas','↑'],['saidas','Saídas','↓'],['invest','Investir','◆'],['mais','Mais','⋯']],
+md=(a,ym)=>a?(+ym.slice(0,4)-+a.slice(0,4))*12+(+ym.slice(5,7)-+a.slice(5,7)):-1,
+sh=(d,ym)=>d?ym+'-'+pad(Math.min(+d.slice(8,10),new Date(+ym.slice(0,4),+ym.slice(5,7),0).getDate())):d,
+grp=k=>Object.keys(G).find(g=>G[g].includes(k)),
+inM=(r,sc,ym)=>{if(sc.all)return 1;const v=r[sc.d]||'';if(sc.par){const d=md(v,ym);return !!v&&d>=0&&d<(+r['Nº de parcelas']||0)}
+ if(sc.rp&&r[sc.rp]=='Todo mês'){const u=r['Repetir até']||'';return !!v&&v.slice(0,7)<=ym&&(!u||u.slice(0,7)>=ym)}
+ return sc.rec&&r.Recorrente=='Sim'?!!v&&v.slice(0,7)<=ym:v.slice(0,7)==ym},
+sum=(k,ym,f)=>(D[k]||[]).filter(r=>inM(r,S[k],ym)).reduce((a,r)=>a+(+r[f]||0),0);
+function M(ym){const e=sum('entradas',ym,'Valor líquido'),
+s=sum('gastos',ym,'Valor')+sum('fixas',ym,'Valor')+sum('parc',ym,'Valor da parcela'),i=sum('invest',ym,'Valor fixo')+sum('invest',ym,'Valor extra');return{e,s,i,b:e-s-i}}
+function go(k){V.k=k;V.day='';render();scrollTo(0,0)}
+function mv(n){const d=new Date(+V.ym.slice(0,4),+V.ym.slice(5)-1+n,1);V.ym=d.getFullYear()+'-'+pad(d.getMonth()+1);V.day='';render()}
+function sd(p){V.day=V.day==p?'':p;render()}
+function render(){const k=V.k,sc=S[k],g=grp(k),nm=k=='resumo'||(sc&&!sc.all);
+ let h=`<header><h1>${esc(sc?sc.t:k=='bkp'?'Backup':'Resumo')}</h1><button class=th aria-label="Alternar tema claro ou escuro" onclick="th()">${document.documentElement.dataset.t=='dark'?'☀':'☾'}</button>${nm?`<div class=mn><button aria-label="Mês anterior" onclick="mv(-1)">‹</button><b>${MN[+V.ym.slice(5)-1].slice(0,3)} ${V.ym.slice(0,4)}</b><button aria-label="Próximo mês" onclick="mv(1)">›</button></div>`:''}</header>`;
+ if(G[g].length>1)h+=`<div class=ch>${G[g].map(x=>`<button class="${x==k?'on':''}" onclick="go('${x}')">${S[x]?esc(S[x].c||S[x].t):'Backup'}</button>`).join('')}</div>`;
+ h+=k=='resumo'?resumo():k=='bkp'?bkp():listv(k);
+ h+=`<nav>${NAV.map(([n,l,i])=>`<button class="${n==g?'on':''}" onclick="go('${G[n][0]}')"><i>${i}</i>${l}</button>`).join('')}</nav>`;
+ $('#app').innerHTML=h}
+function listv(k){const sc=S[k];let rows=(D[k]||[]).filter(r=>inM(r,sc,V.ym)).map(r=>sc.rp||sc.par?{...r,[sc.d]:sh(r[sc.d],V.ym)}:r);
+ if(k=='cal'&&V.day)rows=rows.filter(r=>(r.Data||'').slice(8,10)==V.day);
+ const kf=sc.d||sc.f[0][0];rows.sort(sc.srt||((a,b)=>String(a[kf]||'').localeCompare(b[kf]||'')));
+ const tot=rows.reduce((a,r)=>a+(+r[sc.v]||0)+(sc.v2?+r[sc.v2]||0:0),0);
+ return(k=='cal'?perm()+calg():'')+(sc.v&&!sc.nt?`<div class=sm><span>${rows.length} lançamentos</span><b>${R(tot)}</b></div>`:'')+
+ (rows.length?rows.map(r=>card(k,r)).join(''):`<p class=em>Nada por aqui ainda.<br>Toque em + para adicionar.</p>`)+`<button class=fab aria-label="Adicionar" onclick="ed('${k}')">+</button>`}
+function card(k,r){const sc=S[k],c=sc.chk||sc.pg,on=sc.pg?!!(r.pg&&r.pg[V.ym]):c&&r[c[0]]==c[1],
+ m=(sc.ex&&sc.ex(r)?[sc.ex(r)]:[]).concat(sc.f.slice(1).filter(([n,t])=>!['money','num'].includes(t)&&r[n]&&!(sc.chk&&n==c[0])).slice(0,4).map(([n,t])=>t=='date'||t=='month'?fd(r[n]):esc(r[n]))),
+ val=sc.v?(+r[sc.v]||0)+(sc.v2?+r[sc.v2]||0:0):null,cl=sc.cls?sc.cls(r):sc.s<0?'ng':sc.s>0?'ps':'';
+ return`<div class="cd${on?' dn':''}">${c?`<button class=ck aria-label="Marcar" onclick="tg('${k}','${r.id}')">${on?'✓':''}</button>`:''}<div class=bd onclick="ed('${k}','${r.id}')"><b>${esc(r[sc.f[0][0]]||'(sem título)')}</b><small>${m.map(x=>`<span>${x}</span>`).join('')}</small></div>${val!=null?`<span class="vl ${cl}">${R(val)}</span>`:''}</div>`}
+function tg(k,id){const r=D[k].find(x=>x.id==id),c=S[k].chk;if(S[k].pg){r.pg=r.pg||{};r.pg[V.ym]=r.pg[V.ym]?0:1}else r[c[0]]=r[c[0]]==c[1]?c[2]:c[1];save();render()}
+function calg(){const[y,m]=V.ym.split('-').map(Number),f=new Date(y,m-1,1).getDay(),nd=new Date(y,m,0).getDate(),ev={};
+ (D.cal||[]).filter(r=>inM(r,S.cal,V.ym)).forEach(r=>{const d=(r.Data||'').slice(8,10);(ev[d]=ev[d]||new Set()).add(r.Tipo)});
+ let h='<div class=cg>'+'DSTQQSS'.split('').map(x=>`<small>${x}</small>`).join('')+'<span></span>'.repeat(f);
+ for(let d=1;d<=nd;d++){const p=pad(d),e=ev[p];h+=`<button class="${V.day==p?'on':''}" onclick="sd('${p}')">${d}${e?'<i>'+[...e].map(t=>`<em class="${t=='Receita'?'pos':t=='Despesa'?'neg':''}"></em>`).join('')+'</i>':''}</button>`}
+ return h+'</div>'}
+function resumo(){const y=V.ym.slice(0,4),Ms=[...Array(12)].map((_,i)=>M(y+'-'+pad(i+1))),c=M(V.ym),
+ mx=Math.max(0,...Ms.map(x=>x.b)),mn=Math.min(0,...Ms.map(x=>x.b)),sp=(mx-mn)||1,X=i=>(20+i*27.3).toFixed(1),Y=v=>(10+(mx-v)/sp*74).toFixed(1),ci=+V.ym.slice(5)-1,
+ due=(D.fixas||[]).filter(r=>inM(r,S.fixas,V.ym)&&!(r.pg&&r.pg[V.ym])).map(r=>({...r,Vencimento:sh(r.Vencimento,V.ym)})).sort((a,b)=>String(a.Vencimento).localeCompare(b.Vencimento)).slice(0,5),
+ kp=[['Entradas',c.e,'ps'],['Saídas',c.s,'ng'],['Investido',c.i,''],['Saldo do mês',c.b,'']].map(([l,v,s])=>`<div class="kp ${s}"><small>${l}</small><b>${R(v)}</b></div>`).join('');
+ return`<div class=cap><img src="capa.jpg" alt="Korus Finance"></div><div class=hero><b>${greet()}</b><small>${MN[ci]} de ${y}</small></div><div class=kg>${kp}</div><h3>Saldo mês a mês em ${y}</h3><svg viewBox="0 0 340 105" class=chart role=img aria-label="Gráfico de saldo mensal"><line class=z x1=8 x2=332 y1=${Y(0)} y2=${Y(0)} /><polyline points="${Ms.map((x,i)=>X(i)+','+Y(x.b)).join(' ')}" />${Ms.map((x,i)=>`<circle cx=${X(i)} cy=${Y(x.b)} r=3 class="${i==ci?'cur':''}" />`).join('')}${MN.map((m,i)=>`<text x=${X(i)} y=100>${m[0]}</text>`).join('')}</svg>
+ <h3>Contas fixas a pagar</h3>${due.length?due.map(r=>`<div class=cd><div class=bd><b>${esc(r['Descrição'])}</b><small><span>vence ${fd(r.Vencimento)}</span></small></div><span class="vl ng">${R(r.Valor)}</span></div>`).join(''):'<p class=em style="margin:12px 16px">Nenhuma conta pendente neste mês.</p>'}
+ <h3>Resumo geral de ${y}</h3><div class=tw><table><tr><th></th><th>Entradas</th><th>Saídas</th><th>Investido</th><th>Saldo</th></tr>${Ms.map((x,i)=>`<tr><td>${MN[i].slice(0,3)}</td><td>${R(x.e)}</td><td>${R(x.s)}</td><td>${R(x.i)}</td><td class="${x.b<0?'ng':'ps'}">${R(x.b)}</td></tr>`).join('')}</table></div>`}
+function bkp(){return`<div class=cd style="display:block"><b>Seus dados ficam guardados neste aparelho.</b><small style="display:block;margin-top:4px">Exporte um backup com frequência. Para usar em outro celular, importe o arquivo lá.</small><div class=bt><button class=pr onclick="ex()">Exportar backup</button><label class=pr style="margin:0;color:var(--pt)">Importar backup<input type=file accept=".json" hidden onchange="im(this)"></label><button class=dg onclick="wipe()">Apagar tudo</button></div></div><p class=em>Para instalar: no navegador, escolha “Adicionar à tela inicial”.</p>`}
+function ex(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='korus-finance-backup-'+TD+'.json';a.click()}
+function im(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.isArray(o))throw 0;if(confirm('Substituir os dados atuais pelo backup?')){D=o;save();render()}}catch(e){alert('Arquivo de backup inválido.')}};r.readAsText(f)}
+function wipe(){if(confirm('Apagar todos os dados deste aparelho? Essa ação não pode ser desfeita.')){D={};save();render()}}
+function ed(k,id){const sc=S[k],r=id?D[k].find(x=>x.id==id):{},ex=D[k]||[],dd=V.ym==TD.slice(0,7)?TD:V.ym+'-01';
+ const f=sc.f.map(([n,t,o],i)=>{let v=r[n]??(id?'':t=='date'?dd:t=='month'?V.ym:(n=='Status'||n=='Recorrente'||n=='Lembrete'||n=='Repetir'||n=='Entrada fixa')&&o?o[0]:'');
+ const ty={text:'text',date:'date',month:'month',time:'time',money:'number',num:'number',sel:'text'}[t],u=t=='sel'?[...new Set([...(o||[]),...ex.map(x=>x[n]).filter(Boolean)])]:[];
+ return`<label>${esc(n)}<input id=f${i} type=${ty} ${t=='money'?'step=0.01 inputmode=decimal':t=='num'?'inputmode=numeric':''} ${t=='sel'?`list=dl${i} autocomplete=off`:''} value="${esc(v)}">${t=='sel'?`<datalist id=dl${i}>${u.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`:''}</label>`}).join('');
+ const m=document.createElement('div');m.className='md';m.id='mdl';m.onclick=e=>{if(e.target==m)cl()};
+ m.innerHTML=`<div class=sh><h2>${id?'Editar':'Novo lançamento'}: ${esc(sc.c||sc.t)}</h2>${f}<div class=bt><button class=pr onclick="sv('${k}','${id||''}')">Salvar</button>${k=='cal'&&id?`<button onclick="ics('${id}')">Levar para a agenda do celular</button>`:''}${id?`<button class=dg onclick="rm('${k}','${id}')">Excluir</button>`:''}<button onclick="cl()">Cancelar</button></div></div>`;
+ document.body.appendChild(m)}
+function cl(){const m=$('#mdl');m&&m.remove()}
+function sv(k,id){const sc=S[k];D[k]=D[k]||[];const r=id?D[k].find(x=>x.id==id):{id:Math.random().toString(36).slice(2)+Date.now().toString(36)};
+ sc.f.forEach(([n,t],i)=>{const e=$('#f'+i);r[n]=t=='money'||t=='num'?(e.valueAsNumber||0):e.value.trim()});
+ sc.post&&sc.post(r);if(!id)D[k].push(r);save();cl();render()}
+function rm(k,id){if(confirm('Excluir este lançamento?')){D[k]=D[k].filter(x=>x.id!=id);save();cl();render()}}
+const greet=()=>{const h=new Date().getHours();return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'};
+function th(){const d=document.documentElement,n=d.dataset.t=='dark'?'light':'dark';d.dataset.t=n;try{localStorage.kft=n}catch(e){}render()}
+const ld=n=>n.getFullYear()+'-'+pad(n.getMonth()+1)+'-'+pad(n.getDate());
+function perm(){if(!('Notification' in window))return'';const p=Notification.permission;return p=='granted'?'':`<div class="cd"><div class=bd><b>Lembretes</b><small><span>${p=='denied'?'Notificações bloqueadas. Libere nas configurações do site.':'Ative para ser avisado na hora marcada.'}</span></small></div>${p=='denied'?'':'<button class=pr style="padding:10px 14px;border-radius:10px" onclick="askn()">Ativar</button>'}</div>`}
+function askn(){Notification.requestPermission().then(render)}
+function toast(m){const t=document.createElement('div');t.className='tt';t.textContent=m;t.onclick=()=>t.remove();document.body.appendChild(t);setTimeout(()=>t.remove(),12000)}
+function notify(t,b,k){toast('🔔 '+t+(b?' ('+b+')':''));if('Notification' in window&&Notification.permission=='granted'){const o={body:b,icon:'icon-192.png',tag:k},f=()=>{try{new Notification(t,o)}catch(e){}};navigator.serviceWorker&&navigator.serviceWorker.ready?navigator.serviceWorker.ready.then(r=>r.showNotification(t,o)).catch(f):f()}}
+function chk(){let F;try{F=JSON.parse(localStorage.kfr||'[]')}catch(e){F=[]}const n=new Date(),td=ld(n);let ch=0;
+ (D.cal||[]).forEach(r=>{if(r.Lembrete!='Sim'||!r.Data)return;const ds=r.Recorrente=='Sim'?(r.Data<=td&&r.Data.slice(8,10)==td.slice(8,10)?td:null):r.Data;if(!ds)return;
+  const at=new Date(ds+'T'+(r['Horário']||'09:00')),key=r.id+'@'+ds;
+  if(at<=n&&n-at<864e5&&!F.includes(key)){F.push(key);ch=1;notify(r.Nome||'Lembrete',[r.Valor?R(r.Valor):'',r.Tipo].filter(Boolean).join(' - '),key)}});
+ if(ch)try{localStorage.kfr=JSON.stringify(F.slice(-300))}catch(e){}}
+function ics(id){const r=D.cal.find(x=>x.id==id);if(!r.Data){alert('Defina a data antes.');return}
+ const t=(r['Horário']||'09:00').replace(':','')+'00',z=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',e=s=>String(s).replace(/[\\;,]/g,'\\$&').replace(/\n/g,' '),
+ L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Korus Finance//PT','BEGIN:VEVENT','UID:'+id+'@korus','DTSTAMP:'+z,'DTSTART:'+r.Data.replace(/-/g,'')+'T'+t,'DURATION:PT30M','SUMMARY:'+e(r.Nome||'Lembrete financeiro')].concat(r.Recorrente=='Sim'?['RRULE:FREQ=MONTHLY']:[],r.Observações?['DESCRIPTION:'+e(r.Observações)]:[],['BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:'+e(r.Nome||'Lembrete'),'END:VALARM','END:VEVENT','END:VCALENDAR']);
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));a.download='lembrete.ics';a.click()}
+if(CODE&&localStorage.kfok!==CODE){$('#app').innerHTML='<form class=gate><h1>Korus Finance</h1><label>Código de acesso<input id=cd type=password autocomplete=off></label><div class=bt><button class=pr>Entrar</button></div></form>';
+ $('.gate').onsubmit=e=>{e.preventDefault();if($('#cd').value.trim()==CODE){localStorage.kfok=CODE;render()}else alert('Código incorreto.')}}else render();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+chk();setInterval(chk,3e4);document.addEventListener('visibilitychange',chk);
+</script></body></html>

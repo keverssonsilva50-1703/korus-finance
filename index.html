@@ -3,7 +3,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Korus Finance</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="/icone-192.png"><link rel="apple-touch-icon" href="icon-180.png">
+<meta property="og:type" content="website"><meta property="og:title" content="Korus Finance"><meta property="og:description" content="Planner financeiro: entradas, saídas, parcelas, investimentos e metas em um só lugar."><meta property="og:image" content="/capa.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="/capa.jpg">
 <meta name="theme-color" content="#0b6e6e">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <style>
@@ -55,17 +56,18 @@ label input{display:block;width:100%;margin-top:4px;padding:11px 12px;border-rad
 .gate{max-width:340px;margin:22vh auto;padding:0 20px;text-align:center}.gate h1{margin-bottom:16px}
 .th{font-size:18px;width:36px;height:36px;border-radius:99px;border:1px solid var(--b);background:var(--c)}.hero{margin:0 16px 14px}.hero b{display:block;font-size:30px;letter-spacing:-.03em}.hero small{color:var(--mut)}
 .cap{margin:0 16px 14px;background:#000;border-radius:16px;overflow:hidden}.cap img{display:block;width:100%;max-height:240px;object-fit:contain}
+.au{max-width:440px;margin:0 auto;padding:16px}.au .cap{margin:0 0 14px}.au h2{margin:4px 0 8px}.au p{color:var(--mut)}.am{margin:0 0 10px;padding:10px 12px;border-radius:10px;background:var(--c);border:1px solid var(--neg);color:var(--neg)!important}.am.ok{border-color:var(--pos);color:var(--pos)!important}
 .tt{position:fixed;top:calc(10px + env(safe-area-inset-top));left:12px;right:12px;z-index:30;background:var(--p);color:var(--pt);padding:12px 14px;border-radius:12px;font-weight:600;box-shadow:0 4px 14px #0004}
 :focus-visible{outline:2px solid var(--p);outline-offset:2px}
 </style><script>try{document.documentElement.dataset.t=localStorage.kft||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script></head><body><div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
-const CODE='';/* Código de acesso do cliente. Deixe vazio para app sem bloqueio. */
+const SB_URL='https://xajdqhyjcamogfmvnahf.supabase.co',SB_KEY='sb_publishable_qC45KFHumSeCdi-TLUDLiw_bEQIlEVB';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
 R=v=>(+v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),fd=d=>d?d.split('-').reverse().join('/'):'',
 pad=n=>String(n).padStart(2,'0'),T=new Date(),TD=T.getFullYear()+'-'+pad(T.getMonth()+1)+'-'+pad(T.getDate()),
 MN=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-let D={};try{D=JSON.parse(localStorage.kf||'{}')}catch(e){}
-const save=()=>{try{localStorage.kf=JSON.stringify(D)}catch(e){}};
+let D={},U=null,P=null,AM='in';
 let V={k:'resumo',ym:TD.slice(0,7),day:''};
 const INST=['Inter','Nubank','Itaú','Bradesco','Caixa','Sicoob','Santander','C6 Bank','PicPay','Banco do Brasil','BTG Pactual','Outros'],
 CAT=['Alimentação','Transporte','Moradia','Lazer','Saúde','Educação','Investimento','Assinaturas','Serviços / Taxas','Doações','Compras','Outros'],
@@ -99,8 +101,8 @@ function go(k){V.k=k;V.day='';render();scrollTo(0,0)}
 function mv(n){const d=new Date(+V.ym.slice(0,4),+V.ym.slice(5)-1+n,1);V.ym=d.getFullYear()+'-'+pad(d.getMonth()+1);V.day='';render()}
 function sd(p){V.day=V.day==p?'':p;render()}
 function render(){const k=V.k,sc=S[k],g=grp(k),nm=k=='resumo'||(sc&&!sc.all);
- let h=`<header><h1>${esc(sc?sc.t:k=='bkp'?'Backup':'Resumo')}</h1><button class=th aria-label="Alternar tema claro ou escuro" onclick="th()">${document.documentElement.dataset.t=='dark'?'☀':'☾'}</button>${nm?`<div class=mn><button aria-label="Mês anterior" onclick="mv(-1)">‹</button><b>${MN[+V.ym.slice(5)-1].slice(0,3)} ${V.ym.slice(0,4)}</b><button aria-label="Próximo mês" onclick="mv(1)">›</button></div>`:''}</header>`;
- if(G[g].length>1)h+=`<div class=ch>${G[g].map(x=>`<button class="${x==k?'on':''}" onclick="go('${x}')">${S[x]?esc(S[x].c||S[x].t):'Backup'}</button>`).join('')}</div>`;
+ let h=`<header><h1>${esc(sc?sc.t:k=='bkp'?'Conta':'Resumo')}</h1><button class=th aria-label="Alternar tema claro ou escuro" onclick="th()">${document.documentElement.dataset.t=='dark'?'☀':'☾'}</button>${nm?`<div class=mn><button aria-label="Mês anterior" onclick="mv(-1)">‹</button><b>${MN[+V.ym.slice(5)-1].slice(0,3)} ${V.ym.slice(0,4)}</b><button aria-label="Próximo mês" onclick="mv(1)">›</button></div>`:''}</header>`;
+ if(G[g].length>1)h+=`<div class=ch>${G[g].map(x=>`<button class="${x==k?'on':''}" onclick="go('${x}')">${S[x]?esc(S[x].c||S[x].t):'Conta'}</button>`).join('')}</div>`;
  h+=k=='resumo'?resumo():k=='bkp'?bkp():listv(k);
  h+=`<nav>${NAV.map(([n,l,i])=>`<button class="${n==g?'on':''}" onclick="go('${G[n][0]}')"><i>${i}</i>${l}</button>`).join('')}</nav>`;
  $('#app').innerHTML=h}
@@ -114,7 +116,7 @@ function card(k,r){const sc=S[k],c=sc.chk||sc.pg,on=sc.pg?!!(r.pg&&r.pg[V.ym]):c
  m=(sc.ex&&sc.ex(r)?[sc.ex(r)]:[]).concat(sc.f.slice(1).filter(([n,t])=>!['money','num'].includes(t)&&r[n]&&!(sc.chk&&n==c[0])).slice(0,4).map(([n,t])=>t=='date'||t=='month'?fd(r[n]):esc(r[n]))),
  val=sc.v?(+r[sc.v]||0)+(sc.v2?+r[sc.v2]||0:0):null,cl=sc.cls?sc.cls(r):sc.s<0?'ng':sc.s>0?'ps':'';
  return`<div class="cd${on?' dn':''}">${c?`<button class=ck aria-label="Marcar" onclick="tg('${k}','${r.id}')">${on?'✓':''}</button>`:''}<div class=bd onclick="ed('${k}','${r.id}')"><b>${esc(r[sc.f[0][0]]||'(sem título)')}</b><small>${m.map(x=>`<span>${x}</span>`).join('')}</small></div>${val!=null?`<span class="vl ${cl}">${R(val)}</span>`:''}</div>`}
-function tg(k,id){const r=D[k].find(x=>x.id==id),c=S[k].chk;if(S[k].pg){r.pg=r.pg||{};r.pg[V.ym]=r.pg[V.ym]?0:1}else r[c[0]]=r[c[0]]==c[1]?c[2]:c[1];save();render()}
+function tg(k,id){const r=D[k].find(x=>x.id==id),c=S[k].chk;if(S[k].pg){r.pg=r.pg||{};r.pg[V.ym]=r.pg[V.ym]?0:1}else r[c[0]]=r[c[0]]==c[1]?c[2]:c[1];render();put(k,r)}
 function calg(){const[y,m]=V.ym.split('-').map(Number),f=new Date(y,m-1,1).getDay(),nd=new Date(y,m,0).getDate(),ev={};
  (D.cal||[]).filter(r=>inM(r,S.cal,V.ym)).forEach(r=>{const d=(r.Data||'').slice(8,10);(ev[d]=ev[d]||new Set()).add(r.Tipo)});
  let h='<div class=cg>'+'DSTQQSS'.split('').map(x=>`<small>${x}</small>`).join('')+'<span></span>'.repeat(f);
@@ -124,13 +126,13 @@ function resumo(){const y=V.ym.slice(0,4),Ms=[...Array(12)].map((_,i)=>M(y+'-'+p
  mx=Math.max(0,...Ms.map(x=>x.b)),mn=Math.min(0,...Ms.map(x=>x.b)),sp=(mx-mn)||1,X=i=>(20+i*27.3).toFixed(1),Y=v=>(10+(mx-v)/sp*74).toFixed(1),ci=+V.ym.slice(5)-1,
  due=(D.fixas||[]).filter(r=>inM(r,S.fixas,V.ym)&&!(r.pg&&r.pg[V.ym])).map(r=>({...r,Vencimento:sh(r.Vencimento,V.ym)})).sort((a,b)=>String(a.Vencimento).localeCompare(b.Vencimento)).slice(0,5),
  kp=[['Entradas',c.e,'ps'],['Saídas',c.s,'ng'],['Investido',c.i,''],['Saldo do mês',c.b,'']].map(([l,v,s])=>`<div class="kp ${s}"><small>${l}</small><b>${R(v)}</b></div>`).join('');
- return`<div class=cap><img src="capa.jpg" alt="Korus Finance"></div><div class=hero><b>${greet()}</b><small>${MN[ci]} de ${y}</small></div><div class=kg>${kp}</div><h3>Saldo mês a mês em ${y}</h3><svg viewBox="0 0 340 105" class=chart role=img aria-label="Gráfico de saldo mensal"><line class=z x1=8 x2=332 y1=${Y(0)} y2=${Y(0)} /><polyline points="${Ms.map((x,i)=>X(i)+','+Y(x.b)).join(' ')}" />${Ms.map((x,i)=>`<circle cx=${X(i)} cy=${Y(x.b)} r=3 class="${i==ci?'cur':''}" />`).join('')}${MN.map((m,i)=>`<text x=${X(i)} y=100>${m[0]}</text>`).join('')}</svg>
+ return`<div class=cap><img src="capa.jpg" alt="Korus Finance"></div><div class=hero><b>${greet()}${P&&P.nome?', '+esc(P.nome.split(' ')[0]):''}</b><small>${MN[ci]} de ${y}</small></div><div class=kg>${kp}</div><h3>Saldo mês a mês em ${y}</h3><svg viewBox="0 0 340 105" class=chart role=img aria-label="Gráfico de saldo mensal"><line class=z x1=8 x2=332 y1=${Y(0)} y2=${Y(0)} /><polyline points="${Ms.map((x,i)=>X(i)+','+Y(x.b)).join(' ')}" />${Ms.map((x,i)=>`<circle cx=${X(i)} cy=${Y(x.b)} r=3 class="${i==ci?'cur':''}" />`).join('')}${MN.map((m,i)=>`<text x=${X(i)} y=100>${m[0]}</text>`).join('')}</svg>
  <h3>Contas fixas a pagar</h3>${due.length?due.map(r=>`<div class=cd><div class=bd><b>${esc(r['Descrição'])}</b><small><span>vence ${fd(r.Vencimento)}</span></small></div><span class="vl ng">${R(r.Valor)}</span></div>`).join(''):'<p class=em style="margin:12px 16px">Nenhuma conta pendente neste mês.</p>'}
  <h3>Resumo geral de ${y}</h3><div class=tw><table><tr><th></th><th>Entradas</th><th>Saídas</th><th>Investido</th><th>Saldo</th></tr>${Ms.map((x,i)=>`<tr><td>${MN[i].slice(0,3)}</td><td>${R(x.e)}</td><td>${R(x.s)}</td><td>${R(x.i)}</td><td class="${x.b<0?'ng':'ps'}">${R(x.b)}</td></tr>`).join('')}</table></div>`}
-function bkp(){return`<div class=cd style="display:block"><b>Seus dados ficam guardados neste aparelho.</b><small style="display:block;margin-top:4px">Exporte um backup com frequência. Para usar em outro celular, importe o arquivo lá.</small><div class=bt><button class=pr onclick="ex()">Exportar backup</button><label class=pr style="margin:0;color:var(--pt)">Importar backup<input type=file accept=".json" hidden onchange="im(this)"></label><button class=dg onclick="wipe()">Apagar tudo</button></div></div><p class=em>Para instalar: no navegador, escolha “Adicionar à tela inicial”.</p>`}
+function bkp(){return`<div class=cd style="display:block"><b>Sua conta</b><small style="display:block;margin-top:4px"><span>${esc(U?U.email:'')}</span></small><div class=bt><button class=dg onclick="out()">Sair da conta</button></div></div><div class=cd style="display:block"><b>Backup dos seus dados</b><small style="display:block;margin-top:4px">Seus dados ficam guardados na sua conta e sincronizam entre aparelhos. O backup é uma cópia extra em arquivo.</small><div class=bt><button class=pr onclick="ex()">Exportar backup</button><label class=pr style="margin:0;color:var(--pt)">Importar backup<input type=file accept=".json" hidden onchange="im(this)"></label><button class=dg onclick="wipe()">Apagar tudo</button></div></div><p class=em>Para instalar: no navegador, escolha “Adicionar à tela inicial”.</p>`}
 function ex(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='korus-finance-backup-'+TD+'.json';a.click()}
-function im(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.isArray(o))throw 0;if(confirm('Substituir os dados atuais pelo backup?')){D=o;save();render()}}catch(e){alert('Arquivo de backup inválido.')}};r.readAsText(f)}
-function wipe(){if(confirm('Apagar todos os dados deste aparelho? Essa ação não pode ser desfeita.')){D={};save();render()}}
+function im(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.isArray(o))throw 0;if(confirm('Substituir os dados atuais pelo backup?'))imp(o)}catch(e){alert('Arquivo de backup inválido.')}};r.readAsText(f)}
+function wipe(){if(confirm('Apagar todos os dados da sua conta? Essa ação não pode ser desfeita.')){D={};render();wipeDb()}}
 function ed(k,id){const sc=S[k],r=id?D[k].find(x=>x.id==id):{},ex=D[k]||[],dd=V.ym==TD.slice(0,7)?TD:V.ym+'-01';
  const f=sc.f.map(([n,t,o],i)=>{let v=r[n]??(id?'':t=='date'?dd:t=='month'?V.ym:(n=='Status'||n=='Recorrente'||n=='Lembrete'||n=='Repetir'||n=='Entrada fixa')&&o?o[0]:'');
  const ty={text:'text',date:'date',month:'month',time:'time',money:'number',num:'number',sel:'text'}[t],u=t=='sel'?[...new Set([...(o||[]),...ex.map(x=>x[n]).filter(Boolean)])]:[];
@@ -139,10 +141,10 @@ function ed(k,id){const sc=S[k],r=id?D[k].find(x=>x.id==id):{},ex=D[k]||[],dd=V.
  m.innerHTML=`<div class=sh><h2>${id?'Editar':'Novo lançamento'}: ${esc(sc.c||sc.t)}</h2>${f}<div class=bt><button class=pr onclick="sv('${k}','${id||''}')">Salvar</button>${k=='cal'&&id?`<button onclick="ics('${id}')">Levar para a agenda do celular</button>`:''}${id?`<button class=dg onclick="rm('${k}','${id}')">Excluir</button>`:''}<button onclick="cl()">Cancelar</button></div></div>`;
  document.body.appendChild(m)}
 function cl(){const m=$('#mdl');m&&m.remove()}
-function sv(k,id){const sc=S[k];D[k]=D[k]||[];const r=id?D[k].find(x=>x.id==id):{id:Math.random().toString(36).slice(2)+Date.now().toString(36)};
+function sv(k,id){const sc=S[k];D[k]=D[k]||[];const r=id?D[k].find(x=>x.id==id):{id:crypto.randomUUID()};
  sc.f.forEach(([n,t],i)=>{const e=$('#f'+i);r[n]=t=='money'||t=='num'?(e.valueAsNumber||0):e.value.trim()});
- sc.post&&sc.post(r);if(!id)D[k].push(r);save();cl();render()}
-function rm(k,id){if(confirm('Excluir este lançamento?')){D[k]=D[k].filter(x=>x.id!=id);save();cl();render()}}
+ sc.post&&sc.post(r);if(!id)D[k].push(r);cl();render();put(k,r)}
+function rm(k,id){if(confirm('Excluir este lançamento?')){D[k]=D[k].filter(x=>x.id!=id);cl();render();del(k,id)}}
 const greet=()=>{const h=new Date().getHours();return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'};
 function th(){const d=document.documentElement,n=d.dataset.t=='dark'?'light':'dark';d.dataset.t=n;try{localStorage.kft=n}catch(e){}render()}
 const ld=n=>n.getFullYear()+'-'+pad(n.getMonth()+1)+'-'+pad(n.getDate());
@@ -159,8 +161,38 @@ function ics(id){const r=D.cal.find(x=>x.id==id);if(!r.Data){alert('Defina a dat
  const t=(r['Horário']||'09:00').replace(':','')+'00',z=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',e=s=>String(s).replace(/[\\;,]/g,'\\$&').replace(/\n/g,' '),
  L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Korus Finance//PT','BEGIN:VEVENT','UID:'+id+'@korus','DTSTAMP:'+z,'DTSTART:'+r.Data.replace(/-/g,'')+'T'+t,'DURATION:PT30M','SUMMARY:'+e(r.Nome||'Lembrete financeiro')].concat(r.Recorrente=='Sim'?['RRULE:FREQ=MONTHLY']:[],r.Observações?['DESCRIPTION:'+e(r.Observações)]:[],['BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:'+e(r.Nome||'Lembrete'),'END:VALARM','END:VEVENT','END:VCALENDAR']);
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));a.download='lembrete.ics';a.click()}
-if(CODE&&localStorage.kfok!==CODE){$('#app').innerHTML='<form class=gate><h1>Korus Finance</h1><label>Código de acesso<input id=cd type=password autocomplete=off></label><div class=bt><button class=pr>Entrar</button></div></form>';
- $('.gate').onsubmit=e=>{e.preventDefault();if($('#cd').value.trim()==CODE){localStorage.kfok=CODE;render()}else alert('Código incorreto.')}}else render();
+
+const sb=window.supabase?window.supabase.createClient(SB_URL,SB_KEY):null,
+ERR={'Invalid login credentials':'E-mail ou senha incorretos.','Email not confirmed':'Confirme seu e-mail antes de entrar.','User already registered':'Este e-mail já tem cadastro. Use “Entrar”.'},
+msgErr=x=>{const m=(x&&x.message)||'';return ERR[m]||(/at least 6/.test(m)?'A senha precisa ter pelo menos 6 caracteres.':/rate limit/i.test(m)?'Muitas tentativas. Aguarde um pouco e tente de novo.':/fetch|network/i.test(m)?'Sem conexão. Verifique a internet.':'Não foi possível concluir. Tente novamente.')};
+function showMsg(m,ok){let e=$('#am');if(!e){e=document.createElement('p');e.id='am';$('#af').before(e)}e.className='am'+(ok?' ok':'');e.setAttribute('role','alert');e.textContent=m}
+function authView(msg,ok){const r=AM=='up';$('#app').innerHTML=`<div class=au><div class=cap><img src="capa.jpg" alt="Korus Finance"></div><div class=ch style="padding:0 0 12px"><button class="${r?'':'on'}" onclick="am('in')">Entrar</button><button class="${r?'on':''}" onclick="am('up')">Criar conta</button></div><form id=af>${r?'<label>Nome<input id=an autocomplete=name required></label>':''}<label>E-mail<input id=ae type=email autocomplete=email required></label><label>Senha<input id=ap type=password autocomplete="${r?'new-password':'current-password'}" minlength=6 required></label>${r?'<label>Telefone (opcional)<input id=at type=tel autocomplete=tel></label>':''}<div class=bt><button class=pr id=ab>${r?'Criar conta':'Entrar'}</button></div></form></div>`;$('#af').onsubmit=sub;if(msg)showMsg(msg,ok)}
+function am(m){AM=m;authView()}
+async function sub(e){e.preventDefault();const b=$('#ab');b.disabled=true;const em=$('#ae').value.trim(),pw=$('#ap').value;
+ try{if(AM=='up'){const{data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{nome:$('#an').value.trim(),telefone:$('#at').value.trim()}}});if(error)throw error;
+   if(data.user&&data.user.identities&&!data.user.identities.length)throw{message:'User already registered'};
+   if(data.session){await enter(data.user);return}AM='in';authView('Conta criada! Confirme seu e-mail pela mensagem que enviamos e depois entre.',1);return}
+  const{data,error}=await sb.auth.signInWithPassword({email:em,password:pw});if(error)throw error;await enter(data.user)}
+ catch(x){b.disabled=false;showMsg(msgErr(x))}}
+function blocked(s){const b=s=='bloqueado';$('#app').innerHTML=`<div class=au><div class=cap><img src="capa.jpg" alt="Korus Finance"></div><h2>${b?'Acesso suspenso':'Acesso ainda não liberado'}</h2><p>${b?'O acesso desta conta está suspenso. Se você acha que é um engano, fale com o suporte.':'Sua conta foi criada, mas o acesso ainda não foi liberado. Ele é liberado após a confirmação da compra.'}</p><div class=bt><button class=pr onclick="out()">Sair</button>${b?'':'<button onclick="enter(U)">Verificar de novo</button>'}</div></div>`}
+async function out(){await sb.auth.signOut()}
+async function enter(u){U=u;$('#app').innerHTML='<p class=em>Carregando…</p>';
+ try{const{data:p,error}=await sb.from('perfis').select('nome,telefone,status_assinatura').eq('id',u.id).maybeSingle();if(error)throw error;P=p||{};
+  if(P.status_assinatura!='ativo')return blocked(P.status_assinatura);await load();render();chk()}
+ catch(x){$('#app').innerHTML='<div class=au><p class=am>Não foi possível carregar seus dados. Verifique a conexão.</p><div class=bt><button class=pr onclick="enter(U)">Tentar de novo</button><button onclick="out()">Sair</button></div></div>'}}
+async function load(){const o={};for(let f=0;;f+=1000){const{data,error}=await sb.from('transacoes').select('id,tipo,dados').eq('user_id',U.id).range(f,f+999);if(error)throw error;data.forEach(x=>{(o[x.tipo]=o[x.tipo]||[]).push({...x.dados,id:x.id})});if(data.length<1000)break}D=o}
+function rowOf(k,r){const sc=S[k],df=sc.d||(sc.f.find(x=>x[1]=='date')||[])[0],t=String(r[df]||''),d=t.length==7?t+'-01':t;
+ return{id:r.id,user_id:U.id,tipo:k,descricao:String(r[sc.f[0][0]]||'').slice(0,200),valor:+r[sc.v]||0,categoria:r.Categoria||r.Grupo||null,data:/^\d{4}-\d\d-\d\d$/.test(d)?d:null,dados:r}}
+function fail(e){console.error(e);toast('Não foi possível salvar. Verifique a conexão.');load().then(render).catch(()=>{})}
+async function put(k,r){const{error}=await sb.from('transacoes').upsert(rowOf(k,r));if(error)fail(error)}
+async function del(k,id){const{error}=await sb.from('transacoes').delete().eq('id',id).eq('user_id',U.id);if(error)fail(error)}
+async function wipeDb(){const{error}=await sb.from('transacoes').delete().eq('user_id',U.id);if(error)fail(error)}
+async function imp(o){const n={},rows=[];for(const k in S){n[k]=(Array.isArray(o[k])?o[k]:[]).filter(r=>r&&typeof r=='object').map(r=>({...r,id:crypto.randomUUID()}));n[k].forEach(r=>rows.push(rowOf(k,r)))}
+ let e=(await sb.from('transacoes').delete().eq('user_id',U.id)).error;for(let i=0;i<rows.length&&!e;i+=500)e=(await sb.from('transacoes').insert(rows.slice(i,i+500))).error;if(e)fail(e);else{D=n;render()}}
+async function boot(){if(!sb){$('#app').innerHTML='<div class=au><p class=am>Não foi possível conectar ao servidor. Verifique a internet e recarregue a página.</p></div>';return}
+ sb.auth.onAuthStateChange(ev=>{if(ev=='SIGNED_OUT'){U=null;P=null;D={};AM='in';V={k:'resumo',ym:TD.slice(0,7),day:''};authView()}});
+ const{data:{session}}=await sb.auth.getSession();session?enter(session.user):authView()}
+boot();
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 chk();setInterval(chk,3e4);document.addEventListener('visibilitychange',chk);
 </script></body></html>
